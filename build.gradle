@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'pmf.projekatrm'
-    mainClass = 'pmf.projekatrm.HelloApplication'
+    mainClass = 'pmf.projekatrm.Main'
 }
 
 javafx {
