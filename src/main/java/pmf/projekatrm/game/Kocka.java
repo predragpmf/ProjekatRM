@@ -1,4 +1,4 @@
-package pmf.projekatrm;
+package pmf.projekatrm.game;
 
 import java.util.Random;
 

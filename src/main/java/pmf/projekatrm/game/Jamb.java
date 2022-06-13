@@ -1,4 +1,4 @@
-package pmf.projekatrm;
+package pmf.projekatrm.game;
 
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public class Jamb {
 
     // Ispisuje vrijednost svih kocki:
     public void ispisiKocke() {
-        for (Kocka k: sveKocke) {
+        for (Kocka k : sveKocke) {
             System.out.print(k.getVrijednost() + " ");
         }
         System.out.println();
@@ -79,7 +79,7 @@ public class Jamb {
 
     // Prebrojava sve vrijednosti kocki:
     public void prebrojSve() {
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             brojVrijednosti[i] = prebroj(i + 1);
             //System.out.println("Broj " + (i + 1) + " je = " + brojVrijednosti[i]);
         }
