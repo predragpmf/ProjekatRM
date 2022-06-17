@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import pmf.projekatrm.game.Klijent;
+import pmf.projekatrm.game.Server;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,6 +42,8 @@ public class LoginController implements Initializable {
                 loginInputField.clear();
                 return;
             } else {
+
+                Server.prijavljeniIgrac = korisnickoIme;
                 Klijent.poruka = korisnickoIme;
                 String[] args = {};
                 pmf.projekatrm.game.Server.main(args);

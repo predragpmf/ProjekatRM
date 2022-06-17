@@ -1,22 +1,23 @@
 package pmf.projekatrm.game;
 
+import pmf.projekatrm.gui.Igrac;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Server extends Thread {
 
     // Sluzi za prekid thread-a:
     public static boolean running;
 
-    // Lista svih igraca:
-    public static Set<String> igraci = new HashSet<>();
+    // Primljena poruka:
+    public static String poruka;
 
-    public static String igrac;
+    // Korisnicko ime trenutno prijavljenog igraca:
+    public static String prijavljeniIgrac;
 
     // UDP socket:
     private DatagramSocket socket;
@@ -64,13 +65,16 @@ public class Server extends Thread {
             }
 
             // Pretvara niz bajtova u String:
-            igrac = new String(packet.getData(), 0, packet.getLength());
+            poruka = new String(packet.getData(), 0, packet.getLength());
 
             // Ako naziv igraca pocinje sa ".", obrisi ga iz liste igraca:
-            if (igrac.startsWith(".")) {
-                igraci.remove(igrac.substring(1));
+            if (poruka.startsWith(".")) {
+                Igrac.sviIgraci.removeIf(i -> i.getKorisnickoIme().equals(poruka.substring(1)));
+                // Ne dodaji prijavljenog igraca u listu igraca:
+            } else if (poruka.equals(prijavljeniIgrac)) {
+                continue;
             } else {
-                igraci.add(igrac);
+                Igrac igr = new Igrac(poruka);
             }
         }
         socket.close();

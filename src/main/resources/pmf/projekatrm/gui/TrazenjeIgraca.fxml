@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18"
             fx:controller="pmf.projekatrm.gui.TrazenjeIgracaController">
     <children>
-        <Button fx:id="trazenjeIspisButton" layoutX="59.0" layoutY="47.0" mnemonicParsing="false" text="Ispisi igrace"/>
+        <TableView fx:id="sviIgraciTable" layoutX="113.0" layoutY="49.0" prefHeight="444.0" prefWidth="578.0">
+            <columns>
+                <TableColumn fx:id="korisnickoImeColumn" prefWidth="446.0" text="Igrači na mreži"/>
+                <TableColumn fx:id="stanjeIgracaColumn" minWidth="0.0" prefWidth="131.0" text="Stanje"/>
+            </columns>
+        </TableView>
+        <Button fx:id="osvjeziIgraceButton" layoutX="230.0" layoutY="514.0" mnemonicParsing="false" text="Osvježi"/>
+        <Button fx:id="posaljiZahtjevButton" layoutX="510.0" layoutY="514.0" mnemonicParsing="false" text="Pošalji"/>
     </children>
 </AnchorPane>
