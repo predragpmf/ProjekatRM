@@ -4,7 +4,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class Klijent extends Thread {
+public class KlijentUDP extends Thread {
 
     // Poruka koja se salje
     public static String poruka;
@@ -12,7 +12,7 @@ public class Klijent extends Thread {
     public static boolean running;
 
     public static void main(String[] args) {
-        Klijent bc = new Klijent();
+        KlijentUDP bc = new KlijentUDP();
         bc.start();
     }
 
@@ -27,6 +27,7 @@ public class Klijent extends Thread {
 
             // Glavna petlja klijenta:
             while (running) {
+                //System.out.println("Poslato: " + poruka);
 
                 // Pretvara String u niz bajtova, pa u paket, te ga salje na adresu:
                 byte[] buffer = poruka.getBytes();

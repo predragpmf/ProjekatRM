@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18"
+            fx:controller="pmf.projekatrm.gui.IgraController">
+    <children>
+        <Label layoutX="386.0" layoutY="292.0" text="Igra je pocela!"/>
+    </children>
+</AnchorPane>

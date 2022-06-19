@@ -5,8 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import pmf.projekatrm.game.Klijent;
-import pmf.projekatrm.game.Server;
+import pmf.projekatrm.game.KlijentUDP;
+import pmf.projekatrm.game.ServerUDP;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,12 +42,11 @@ public class LoginController implements Initializable {
                 loginInputField.clear();
                 return;
             } else {
-
-                Server.prijavljeniIgrac = korisnickoIme;
-                Klijent.poruka = korisnickoIme;
+                ServerUDP.prijavljeniIgrac = korisnickoIme;
+                KlijentUDP.poruka = korisnickoIme;
                 String[] args = {};
-                pmf.projekatrm.game.Server.main(args);
-                pmf.projekatrm.game.Klijent.main(args);
+                ServerUDP.main(args);
+                KlijentUDP.main(args);
                 Window.promjeniScenu("TrazenjeIgraca.fxml", "Traženje igrača", 800, 600);
             }
         });

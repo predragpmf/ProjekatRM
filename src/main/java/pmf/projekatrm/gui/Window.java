@@ -1,10 +1,11 @@
 package pmf.projekatrm.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pmf.projekatrm.game.Klijent;
+import pmf.projekatrm.game.KlijentUDP;
 
 import java.io.IOException;
 
@@ -34,6 +35,16 @@ public class Window extends Application {
         launch(args);
     }
 
+    // Promjena trenutne scene iz sporednog treda je moguca samo pomocu ove metode:
+    public static void pokreniIgru() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Window.promjeniScenu("Igra.fxml", "Igra", 800, 600);
+            }
+        });
+    }
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -48,7 +59,7 @@ public class Window extends Application {
             primaryStage.setOnCloseRequest(e -> {
                 System.out.println("Gasenje servera!");
                 // Posalji svima paket = ".username" da se obrise taj username:
-                Klijent.poruka = "." + Klijent.poruka;
+                KlijentUDP.poruka = "." + KlijentUDP.poruka;
                 // Spavaj 1s da bi poruka imala dovoljno vremena da ode:
                 try {
                     Thread.sleep(1000);

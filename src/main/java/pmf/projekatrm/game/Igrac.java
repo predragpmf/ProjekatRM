@@ -1,4 +1,4 @@
-package pmf.projekatrm.gui;
+package pmf.projekatrm.game;
 
 import java.util.ArrayList;
 import java.util.Objects;
