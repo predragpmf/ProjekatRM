@@ -6,24 +6,33 @@ import java.net.InetAddress;
 
 public class KlijentUDP extends Thread {
 
-    // Poruka koja se salje
-    public static String poruka;
+    // Prekid treda:
+    public static volatile boolean running;
 
-    public static boolean running;
+    // Poruka koja se salje:
+    public static volatile String poruka;
 
-    public static void main(String[] args) {
-        KlijentUDP bc = new KlijentUDP();
-        bc.start();
+    public static InetAddress adresa;
+
+    private DatagramSocket socket;
+
+    public KlijentUDP() {
+        try {
+
+            // Kreira broadcast adresu i broadcast socket:
+            adresa = InetAddress.getByName("192.168.100.255");
+            socket = new DatagramSocket();
+            socket.setBroadcast(true);
+
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
     }
 
     @Override
     public void run() {
         try {
             running = true;
-            // Kreira broadcast adresu i broadcast socket:
-            InetAddress address = InetAddress.getByName("255.255.255.255");
-            DatagramSocket socket = new DatagramSocket();
-            socket.setBroadcast(true);
 
             // Glavna petlja klijenta:
             while (running) {
@@ -31,7 +40,7 @@ public class KlijentUDP extends Thread {
 
                 // Pretvara String u niz bajtova, pa u paket, te ga salje na adresu:
                 byte[] buffer = poruka.getBytes();
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 4445);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, adresa, 4445);
                 socket.send(packet);
                 //System.out.println(poruka);
 

@@ -19,16 +19,20 @@ public class Window extends Application {
 
     // Metoda za promjenu trenutne scene:
     public static void promjeniScenu(String fxmlPutanja, String naslov, int sirina, int visina) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Window.class.getResource(fxmlPutanja));
-            Scene scene = new Scene(fxmlLoader.load(), sirina, visina);
-            getStage().setResizable(false);
-            getStage().setTitle(naslov);
-            getStage().setScene(scene);
-        } catch (IOException e) {
-            System.err.println("Greska pri ucitavanju fxml fajla!");
-            e.printStackTrace();
-        }
+        Platform.runLater(new Runnable() {
+            public void run() {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(Window.class.getResource(fxmlPutanja));
+                    Scene scene = new Scene(fxmlLoader.load(), sirina, visina);
+                    getStage().setResizable(false);
+                    getStage().setTitle(naslov);
+                    getStage().setScene(scene);
+                } catch (IOException e) {
+                    System.err.println("Greska pri ucitavanju fxml fajla!");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -36,14 +40,13 @@ public class Window extends Application {
     }
 
     // Promjena trenutne scene iz sporednog treda je moguca samo pomocu ove metode:
+    /*
     public static void pokreniIgru() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
+        Platform.runLater( new Runnable() { public void run() {
                 Window.promjeniScenu("Igra.fxml", "Igra", 800, 600);
-            }
-        });
+            }});
     }
+     */
 
     @Override
     public void start(Stage primaryStage) {

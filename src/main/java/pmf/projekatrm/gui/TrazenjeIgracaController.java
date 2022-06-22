@@ -15,10 +15,11 @@ import pmf.projekatrm.game.ServerUDP;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class TrazenjeIgracaController implements Initializable {
 
-    public static Igrac ig;
+    public static volatile Igrac ig;
     @FXML
     private Button osvjeziIgraceButton;
     @FXML
@@ -30,12 +31,11 @@ public class TrazenjeIgracaController implements Initializable {
     @FXML
     private TableColumn<Igrac, String> stanjeIgracaColumn;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         osvjeziIgrace();
         posaljiZahtjev();
-
     }
 
     private void osvjeziIgrace() {
@@ -48,28 +48,36 @@ public class TrazenjeIgracaController implements Initializable {
 
     private void posaljiZahtjev() {
         posaljiZahtjevButton.setOnAction(event -> {
-
+            if (ig == null) {
+                return;
+            }
             ig = sviIgraciTable.getSelectionModel().getSelectedItem();
+            if (ig.getStanje().equals("zauzet")) {
+                return;
+            }
             KlijentUDP.poruka = "connect:" + ig.getKorisnickoIme();
+            boolean cekanje = false;
             try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                cekanje = ServerUDP.prihvacenZahtjev.await(10, TimeUnit.SECONDS);
+            } catch (InterruptedException exc) {
+                exc.printStackTrace();
             }
-            int port = Integer.parseInt(ServerUDP.protivnik.split(":")[1]);
-            System.out.println("Port primljenog TCP servera je: " + port);
-            ServerUDP.running = false;
-            KlijentUDP.poruka = "busy:" + port + ":" + ServerUDP.prijavljeniIgrac;
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            if (cekanje) {
+                int port = Integer.parseInt(ServerUDP.protivnik.split(":")[1]);
+                System.out.println("Port primljenog TCP servera je: " + port);
+                ServerUDP.running = false;
+                KlijentUDP.poruka = "busy:" + port + ":" + ServerUDP.prijavljeniIgrac;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                KlijentTCP.port = port;
+                new KlijentTCP().start();
+                Window.promjeniScenu("Igra.fxml", "Igra", 800, 600);
+            } else {
+                System.out.println("Connection timeout");
             }
-            String[] args = {};
-            KlijentTCP.port = port;
-            KlijentTCP.main(args);
-            Window.promjeniScenu("Igra.fxml", "Igra", 800, 600);
-
         });
     }
 

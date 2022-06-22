@@ -24,8 +24,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prijava();
-
-
     }
 
     private void prijava() {
@@ -45,8 +43,8 @@ public class LoginController implements Initializable {
                 ServerUDP.prijavljeniIgrac = korisnickoIme;
                 KlijentUDP.poruka = korisnickoIme;
                 String[] args = {};
-                ServerUDP.main(args);
-                KlijentUDP.main(args);
+                new ServerUDP().start();
+                new KlijentUDP().start();
                 Window.promjeniScenu("TrazenjeIgraca.fxml", "Traženje igrača", 800, 600);
             }
         });

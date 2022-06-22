@@ -8,23 +8,24 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
+import java.util.concurrent.CountDownLatch;
 
 public class ServerUDP extends Thread {
 
-    // Sluzi za prekid thread-a:
-    public static boolean running;
+    // Prekid treda:
+    public static volatile boolean running;
 
     // Primljena poruka:
-    public static String poruka;
+    public static volatile String poruka;
 
+    // IP adresa servera:
+    public static InetSocketAddress adresa;
     // Korisnicko ime trenutno prijavljenog igraca:
-    public static String prijavljeniIgrac;
-
+    public static volatile String prijavljeniIgrac;
     public static String protivnik;
-
+    public static CountDownLatch prihvacenZahtjev = new CountDownLatch(1);
     // UDP socket:
     private DatagramSocket socket;
-
     // Podaci koji se primaju:
     private byte[] buf = new byte[256];
 
@@ -34,22 +35,17 @@ public class ServerUDP extends Thread {
             socket = new DatagramSocket(null);
 
             // Na adresi 0.0.0.0 se slusa broadcast:
-            InetSocketAddress address = new InetSocketAddress("0.0.0.0", 4445);
+            adresa = new InetSocketAddress("0.0.0.0", 4445);
 
             // Omogucava bind socketa koji je vec u upotrebi:
             socket.setReuseAddress(true);
 
             // Postavlja socket na datu adresu i port:
-            socket.bind(address);
+            socket.bind(adresa);
 
         } catch (SocketException se) {
             se.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        ServerUDP es = new ServerUDP();
-        es.start();
     }
 
     public void run() {
@@ -81,9 +77,8 @@ public class ServerUDP extends Thread {
                 // Ako poruka pocinje sa "connect:" i igrac je jednak trenutnom, pokreni TCP server i ugasi UDP server:
             } else if (poruka.startsWith("connect:") && poruka.substring(8).equals(prijavljeniIgrac)) {
                 System.out.println("Poruka pocinje sa connect:");
-                String[] args = {};
-                ServerTCP.main(args);
-                Window.pokreniIgru();
+                new ServerTCP().start();
+                Window.promjeniScenu("Igra.fxml", "Igra", 800, 600);
                 break;
                 // Ako poruka pocinje sa "connect:" a korisnik je nepoznat, ignorisi poruku:
             } else if (poruka.startsWith("connect:")) {
@@ -92,6 +87,7 @@ public class ServerUDP extends Thread {
             } else if (TrazenjeIgracaController.ig != null) {
                 if (poruka.startsWith("busy:") && (poruka.split(":")[2].equals(TrazenjeIgracaController.ig.getKorisnickoIme()))) {
                     protivnik = poruka;
+                    prihvacenZahtjev.countDown();
                     continue;
                 }
                 // Ako poruka pocinje sa "busy:", oznaci tog igraca kao zauzetog (trenutno u igri):
@@ -105,7 +101,7 @@ public class ServerUDP extends Thread {
                 continue;
                 // Ako uslovi nisu ispunjeni, u poruci se nalazi korisnicko ime igraca:
             } else {
-                Igrac igr = new Igrac(poruka);
+                new Igrac(poruka);
             }
         }
         System.out.println("Gasenje UDP servera...");

@@ -7,24 +7,21 @@ import java.util.Random;
 
 public class ServerTCP extends Thread {
 
+    // Prekid treda:
+    public static volatile boolean running;
+
+    // Primljena poruka:
+    public static volatile String poruka;
+
+    // Port servera:
     public static int port;
 
-    public static String poruka;
-
-    //public static boolean povezivanje;
-
-    public static boolean running;
-
-    public static void main(String[] args) {
-        ServerTCP server = new ServerTCP();
-        server.start();
-    }
 
     @Override
     public void run() {
         try {
             running = true;
-            //povezivanje = true;
+
             Random rand = new Random();
             port = rand.nextInt(48125) + 1025;
 
@@ -49,8 +46,8 @@ public class ServerTCP extends Thread {
                 //sleep(1000);
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception exc) {
+            exc.printStackTrace();
         }
     }
 }

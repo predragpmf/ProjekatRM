@@ -8,16 +8,15 @@ import java.net.Socket;
 
 public class KlijentTCP extends Thread {
 
+    // Prekid treda:
+    public static volatile boolean running;
+
+    // Poruka koja se salje:
+    public static volatile String poruka;
+
+    // Port servera:
     public static int port;
 
-    public static boolean running;
-
-    public static String poruka;
-
-    public static void main(String[] args) {
-        KlijentTCP klijent = new KlijentTCP();
-        klijent.start();
-    }
 
     @Override
     public void run() {
