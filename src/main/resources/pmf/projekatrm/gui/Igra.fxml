@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18"
             fx:controller="pmf.projekatrm.gui.IgraController">
     <children>
-        <Label layoutX="386.0" layoutY="292.0" text="Igra je pocela!"/>
+        <Separator layoutX="570.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="0.0"/>
+        <TextArea fx:id="chatOutput" editable="false" layoutX="571.0" layoutY="306.0" prefHeight="256.0"
+                  prefWidth="229.0"/>
+        <TextField fx:id="chatInput" layoutX="573.0" layoutY="562.0" prefHeight="38.0" prefWidth="229.0"
+                   promptText="Napiši poruku..."/>
+        <Text layoutX="576.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chat:"/>
     </children>
 </AnchorPane>

@@ -1,5 +1,7 @@
 package pmf.projekatrm.game;
 
+import pmf.projekatrm.gui.IgraController;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -11,37 +13,60 @@ public class KlijentTCP extends Thread {
     // Prekid treda:
     public static volatile boolean running;
 
-    // Poruka koja se salje:
-    public static volatile String poruka;
+    public static volatile String primljenaPoruka;
+
+    // Adresa severa:
+    public static InetAddress serverAddress;
 
     // Port servera:
     public static int port;
 
+    private static Socket clientSock;
+
+    private static PrintWriter izlaz;
+    private static BufferedReader ulaz;
+
+    private static boolean zauzeto;
+
+
+    public static void posalji(String porukaSlanje) {
+        while (true) {
+            if (!zauzeto) {
+                izlaz.println(porukaSlanje);
+                break;
+            }
+        }
+    }
 
     @Override
     public void run() {
         try {
             running = true;
             System.out.println("Pokretanje TCP klijenta...");
+            serverAddress = InetAddress.getByName("127.0.0.1");
+
+            clientSock = new Socket(serverAddress, port);
+            ulaz = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
+            izlaz = new PrintWriter(clientSock.getOutputStream(), true);
+            izlaz.println("protivnik:" + ServerUDP.prijavljeniIgrac);
+
             while (running) {
-                InetAddress serverAddress = InetAddress.getByName("127.0.0.1");
-                Socket clientSock = new Socket(serverAddress, port);
-                PrintWriter out = new PrintWriter(clientSock.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
 
-                // Posalji poruku:
-                out.println(poruka);
+                zauzeto = false;
+                primljenaPoruka = ulaz.readLine();
+                zauzeto = true;
 
-                System.out.println("Poslata poruka: " + poruka);
+                if (primljenaPoruka.startsWith("protivnik:")) {
+                    ServerUDP.protivnik = primljenaPoruka.substring(10);
+                } else if (primljenaPoruka.startsWith("chat:")) {
+                    IgraController.primiPoruku(primljenaPoruka.substring(5));
+                }
 
-                // Procitaj odgovor:
-                String odgovor = in.readLine();
+                System.out.println("Klijent > Primljena poruka:" + primljenaPoruka);
 
-                //System.out.println("success");
-                in.close();
-                out.close();
-                clientSock.close();
-                sleep(1000);
+                //ulaz.close();
+                //izlaz.close();
+                //clientSock.close();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

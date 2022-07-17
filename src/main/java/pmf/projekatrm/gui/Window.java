@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class Window extends Application {
 
+    public static Scene scene;
     private static Stage loginStage;
 
     public static Stage getStage() {
@@ -23,7 +24,7 @@ public class Window extends Application {
             public void run() {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(Window.class.getResource(fxmlPutanja));
-                    Scene scene = new Scene(fxmlLoader.load(), sirina, visina);
+                    scene = new Scene(fxmlLoader.load(), sirina, visina);
                     getStage().setResizable(false);
                     getStage().setTitle(naslov);
                     getStage().setScene(scene);
