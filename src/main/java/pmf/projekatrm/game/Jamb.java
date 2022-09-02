@@ -81,7 +81,7 @@ public class Jamb {
     public void prebrojSve() {
         for (int i = 0; i < 6; i++) {
             brojVrijednosti[i] = prebroj(i + 1);
-            //System.out.println("Broj " + (i + 1) + " je = " + brojVrijednosti[i]);
+            System.out.println("Broj " + (i + 1) + " je = " + brojVrijednosti[i]);
         }
     }
 
@@ -119,6 +119,15 @@ public class Jamb {
         for (int i = 0; i < 6; i++) {
             if (brojVrijednosti[i] >= 4) {
                 return sumaVrijednosti;
+            }
+        }
+        return 0;
+    }
+
+    public int fiveOfAKind() {
+        for (int i = 0; i < 6; i++) {
+            if (brojVrijednosti[i] >= 5) {
+                return 50;
             }
         }
         return 0;

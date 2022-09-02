@@ -10,10 +10,23 @@ public class Igrac {
 
     public Igrac(String korisnickoIme) {
         this.korisnickoIme = korisnickoIme;
+        if (postoji(korisnickoIme)) {
+            return;
+        }
         this.stanje = "slobodan";
         if (!sviIgraci.contains(this)) {
             sviIgraci.add(this);
         }
+    }
+
+    private boolean postoji(String korisnickoIme) {
+        for (Igrac i : sviIgraci) {
+            if (i.getKorisnickoIme().equals(korisnickoIme)) {
+                i.setStanje("slobodan");
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

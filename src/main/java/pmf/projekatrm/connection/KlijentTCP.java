@@ -1,6 +1,9 @@
-package pmf.projekatrm.game;
+package pmf.projekatrm.connection;
 
 import pmf.projekatrm.gui.IgraController;
+import pmf.projekatrm.gui.LoginController;
+import pmf.projekatrm.gui.TrazenjeIgracaController;
+import pmf.projekatrm.gui.Window;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -49,6 +52,7 @@ public class KlijentTCP extends Thread {
             ulaz = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
             izlaz = new PrintWriter(clientSock.getOutputStream(), true);
             izlaz.println("protivnik:" + ServerUDP.prijavljeniIgrac);
+            IgraController.server = 1;
 
             while (running) {
 
@@ -56,18 +60,46 @@ public class KlijentTCP extends Thread {
                 primljenaPoruka = ulaz.readLine();
                 zauzeto = true;
 
+                if (primljenaPoruka == null) {
+                    continue;
+                }
                 if (primljenaPoruka.startsWith("protivnik:")) {
                     ServerUDP.protivnik = primljenaPoruka.substring(10);
+                    System.out.println(ServerUDP.protivnik);
                 } else if (primljenaPoruka.startsWith("chat:")) {
                     IgraController.primiPoruku(primljenaPoruka.substring(5));
+                } else if (primljenaPoruka.startsWith("kocke:")) {
+                    int[] vrijednosti = new int[5];
+                    for (int i = 0; i < 5; i++) {
+                        vrijednosti[i] = Integer.parseInt(primljenaPoruka.split(":")[i + 1]);
+                        //System.out.println(primljenaPoruka.split(":")[i + 1]);
+                    }
+                    IgraController.promjeniSliku(vrijednosti);
+                } else if (primljenaPoruka.startsWith("quit")) {
+                    KlijentUDP.poruka = ServerUDP.prijavljeniIgrac;
+                    if (!LoginController.udpKlijent.isAlive()) {
+                        LoginController.udpKlijent.start();
+                    }
+                    if (!LoginController.udpServer.isAlive()) {
+                        new ServerUDP().start();
+                    }
+                    TrazenjeIgracaController.ig = null;
+                    ServerUDP.protivnik = "";
+                    Window.promjeniScenu("TrazenjeIgraca.fxml", "Traženje igrača", 800, 600);
+                    break;
+                } else if (primljenaPoruka.startsWith("tabela:")) {
+                    String[] vrijednosti = primljenaPoruka.split(":");
+                    IgraController.azurirajTabelu(vrijednosti);
                 }
 
-                System.out.println("Klijent > Primljena poruka:" + primljenaPoruka);
+                System.out.println("Klijent > Primljena poruka: " + primljenaPoruka);
 
-                //ulaz.close();
-                //izlaz.close();
-                //clientSock.close();
             }
+            ulaz.close();
+            izlaz.close();
+            clientSock.close();
+            running = false;
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

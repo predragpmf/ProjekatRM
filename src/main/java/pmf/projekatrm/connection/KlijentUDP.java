@@ -1,4 +1,4 @@
-package pmf.projekatrm.game;
+package pmf.projekatrm.connection;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -20,7 +20,8 @@ public class KlijentUDP extends Thread {
         try {
 
             // Kreira broadcast adresu i broadcast socket:
-            adresa = InetAddress.getByName("192.168.100.255");
+            //adresa = InetAddress.getByName("192.168.100.255");
+            adresa = InetAddress.getByName("255.255.255.255");
             socket = new DatagramSocket();
             socket.setBroadcast(true);
 

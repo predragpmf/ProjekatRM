@@ -5,8 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import pmf.projekatrm.game.KlijentUDP;
-import pmf.projekatrm.game.ServerUDP;
+import pmf.projekatrm.connection.KlijentUDP;
+import pmf.projekatrm.connection.ServerUDP;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +14,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginController implements Initializable {
+
+    public static ServerUDP udpServer;
+
+    public static KlijentUDP udpKlijent;
 
     @FXML
     private TextField loginInputField;
@@ -43,8 +47,10 @@ public class LoginController implements Initializable {
                 ServerUDP.prijavljeniIgrac = korisnickoIme;
                 KlijentUDP.poruka = korisnickoIme;
                 String[] args = {};
-                new ServerUDP().start();
-                new KlijentUDP().start();
+                udpServer = new ServerUDP();
+                udpServer.start();
+                udpKlijent = new KlijentUDP();
+                udpKlijent.start();
                 Window.promjeniScenu("TrazenjeIgraca.fxml", "Traženje igrača", 800, 600);
             }
         });

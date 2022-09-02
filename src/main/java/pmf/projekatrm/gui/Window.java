@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pmf.projekatrm.game.KlijentUDP;
+import pmf.projekatrm.connection.KlijentUDP;
 
 import java.io.IOException;
 
