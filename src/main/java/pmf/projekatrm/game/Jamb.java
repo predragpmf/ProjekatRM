@@ -1,6 +1,7 @@
 package pmf.projekatrm.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Jamb {
 
@@ -151,14 +152,49 @@ public class Jamb {
         }
     }
 
+    private int[] getSortedKocke(Kocka[] unos) {
+        int[] rezultat = new int[unos.length];
+        for(int i = 0; i < unos.length; i++){
+            rezultat[i] = unos[i].getVrijednost();
+        }
+        Arrays.sort(rezultat);
+        return rezultat;
+    }
+
     public int smallStraight() {
-        //TODO
+        int brUzastopnih;
+        int[] vrijednosti = getSortedKocke(sveKocke);
+        for(int i = 0; i < 5; i++) {
+            if(i >= 3) {
+                brUzastopnih = 0;
+                int prethodna = vrijednosti[i-3];
+                for(int j = i - 2; j <= i; j++) {
+                    int trenutna = vrijednosti[j];
+                    if(trenutna != prethodna + 1) {
+                        break;
+                    }
+                    brUzastopnih += 1;
+                    prethodna = trenutna;
+                }
+                if(brUzastopnih>=3) {
+                    return 30;
+                }
+            }
+        }
         return 0;
     }
 
     public int largeStraight() {
-        //TODO
-        return 0;
+        int[] vrijednosti = getSortedKocke(sveKocke);
+        int prethodna = vrijednosti[0];
+        for(int i = 1; i < 5; i++) {
+            int trenutna = vrijednosti[i];
+            if(trenutna != prethodna + 1) {
+                return 0;
+            }
+            prethodna = trenutna;
+        }
+        return 40;
     }
 
 }
