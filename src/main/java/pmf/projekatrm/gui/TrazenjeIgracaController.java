@@ -41,6 +41,7 @@ public class TrazenjeIgracaController implements Initializable {
         posaljiZahtjev();
     }
 
+    // Pritisak tipke "Osvjezi":
     private void osvjeziIgrace() {
         osvjeziIgraceButton.setOnAction(event -> {
             sviIgraciTable.getItems().clear();
@@ -50,10 +51,10 @@ public class TrazenjeIgracaController implements Initializable {
         });
     }
 
+    // Pritisak tipke "Posalji":
     private void posaljiZahtjev() {
         posaljiZahtjevButton.setOnAction(event -> {
             new Thread(new Runnable() {
-                @Override
                 public void run() {
 
                     ig = sviIgraciTable.getSelectionModel().getSelectedItem();
@@ -95,6 +96,7 @@ public class TrazenjeIgracaController implements Initializable {
         });
     }
 
+    // Prikazuje prozor sa obavjestenjem:
     private void prikaziPoruku() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -108,6 +110,7 @@ public class TrazenjeIgracaController implements Initializable {
         });
     }
 
+    // Kreira listu igraca, koja se ubacuje u tabelu:
     public ObservableList<Igrac> getIgraci() {
         ObservableList<Igrac> igraci = FXCollections.observableArrayList();
         igraci.addAll(Igrac.sviIgraci);

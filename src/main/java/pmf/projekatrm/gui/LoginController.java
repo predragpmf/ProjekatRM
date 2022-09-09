@@ -30,6 +30,7 @@ public class LoginController implements Initializable {
         prijava();
     }
 
+    // Pritisak "Login" tipke:
     private void prijava() {
         loginButton.setOnAction(event -> {
             String korisnickoIme;
@@ -56,6 +57,7 @@ public class LoginController implements Initializable {
         });
     }
 
+    // Prihvata samo brojeve, mala i velika slova:
     private boolean provjeraIspravnosti(String tekst) {
         String regex = "^[a-zA-Z0-9]+$";
         Pattern pattern = Pattern.compile(regex);
@@ -63,6 +65,7 @@ public class LoginController implements Initializable {
         return matcher.matches();
     }
 
+    // Prikazuje prozor sa obavjestenjem:
     private void obavjestenjeProzor(String naslov, String zaglavlje, String sadrzaj) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(naslov);

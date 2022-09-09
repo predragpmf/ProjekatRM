@@ -23,10 +23,16 @@ public class IgraController implements Initializable {
 
     // klijent 1, server 2:
     public static int server;
+
+    // Broj poteza:
     public static int potez;
 
     public static Jamb jamb;
+
+    // Lista kocki koje se nece ponovo bacati:
     public static ArrayList<Integer> odabraneKocke = new ArrayList<>();
+
+    // Broj pritisnutih toggle tipki na tabeli:
     private int brojPritisnutih;
 
     @FXML
@@ -89,6 +95,7 @@ public class IgraController implements Initializable {
     @FXML
     private Label ukupnoProtivnikLabel;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         jamb = new Jamb();
@@ -99,6 +106,8 @@ public class IgraController implements Initializable {
         izlaz();
     }
 
+
+    // Kada primi tabelu od protivnika, unosi vrijednosti u svoju tabelu:
     public static void azurirajTabelu(String[] vrijednosti) {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -138,6 +147,8 @@ public class IgraController implements Initializable {
                 sansaLabel.setText(vrijednosti[14]);
                 jambLabel.setText(vrijednosti[15]);
                 ukupnoProtivnikLabel.setText(vrijednosti[16]);
+
+                // Prikazuje poruku na zavrsetku igre:
                 if (Integer.parseInt(ukupnoProtivnikLabel.getText()) != 0 && Integer.parseInt(ukupnoIgracLabel.getText()) != 0) {
                     System.out.println("Drugi");
                     if (Integer.parseInt(ukupnoIgracLabel.getText()) > Integer.parseInt(ukupnoProtivnikLabel.getText())) {
@@ -154,6 +165,8 @@ public class IgraController implements Initializable {
         });
     }
 
+
+    // Kada primi poruku od protivnika, ispisuje je na chat:
     public static void primiPoruku(String primljenaPoruka) {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -163,6 +176,8 @@ public class IgraController implements Initializable {
         });
     }
 
+
+    // Mijenja sliku jedne kocke:
     public static void promjeniSliku(int pozicija, int vrijednost) {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -174,6 +189,8 @@ public class IgraController implements Initializable {
         });
     }
 
+
+    // Mijenja slike vise kocki:
     public static void promjeniSliku(int[] vrijednosti) {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -187,104 +204,84 @@ public class IgraController implements Initializable {
         });
     }
 
+
+    // Pritisak tipki na tabeli:
     private void pritisakTabele() {
         toggle1.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                toggle1.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            toggle1.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         toggle2.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                toggle2.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            toggle2.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         toggle3.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                toggle3.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            toggle3.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         toggle4.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                toggle4.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            toggle4.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         toggle5.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                toggle5.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            toggle5.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         toggle6.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                toggle6.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            toggle6.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         threeOAKToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                threeOAKToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            threeOAKToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         fourOAKToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                fourOAKToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            fourOAKToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         fullHouseToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                fullHouseToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            fullHouseToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         smallStraightToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                smallStraightToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            smallStraightToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         largeStraightToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                largeStraightToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            largeStraightToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         sansaToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                sansaToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            sansaToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
         jambToggle.setOnAction(event -> {
-            if (!baciKocke.isDisabled()) {
-                jambToggle.setDisable(true);
-                brojPritisnutih++;
-                sljedeciPotez();
-            }
+            jambToggle.setDisable(true);
+            brojPritisnutih++;
+            sljedeciPotez();
         });
     }
 
+
+    // Na pritisak tipke u tabeli:
     private void sljedeciPotez() {
         resetKocke();
         baciKocke.setDisable(true);
         potez = 0;
+
+        // Resetuje vrijednosti na tabeli:
         if (!toggle1.isDisabled()) {
             toggle1.setText("0");
         }
@@ -325,6 +322,7 @@ public class IgraController implements Initializable {
             jambToggle.setText("0");
         }
 
+        // Ako su sve vrijednosti iz gornje tabele odabrane, izracunaj sumu i bonus:
         if (toggle1.isDisabled() && toggle2.isDisabled() && toggle3.isDisabled() && toggle4.isDisabled() &&
                 toggle5.isDisabled() && toggle6.isDisabled()) {
             int suma = Integer.parseInt(toggle1.getText()) +
@@ -338,6 +336,7 @@ public class IgraController implements Initializable {
                 bonusIgracLabel.setText("0");
             }
         }
+        // Ako su sve vrijednosti odabrane, izracunaj ukupni rezultat:
         int suma = 0;
         if (brojPritisnutih == 13) {
             suma = Integer.parseInt(sumaIgracLabel.getText()) + Integer.parseInt(bonusIgracLabel.getText()) +
@@ -347,6 +346,8 @@ public class IgraController implements Initializable {
                     Integer.parseInt(jambToggle.getText());
             ukupnoIgracLabel.setText(Integer.toString(suma));
         }
+
+        // Salje vrijednosti tabele protivniku:
         String poruka = "tabela:" + toggle1.getText() + ":" + toggle2.getText() + ":" + toggle3.getText() + ":" +
                 toggle4.getText() + ":" + toggle5.getText() + ":" + toggle6.getText() + ":" +
                 sumaIgracLabel.getText() + ":" + bonusIgracLabel.getText() + ":" + threeOAKToggle.getText() + ":" +
@@ -358,7 +359,13 @@ public class IgraController implements Initializable {
         } else if (server == 2) {
             ServerTCP.posalji(poruka);
         }
-        int sumaProtivnika = Integer.parseInt(ukupnoProtivnikLabel.getText());
+
+        // Prikazuje poruku na zavrsetku igre:
+        String sumaProtivnikaStr = ukupnoProtivnikLabel.getText();
+        if (sumaProtivnikaStr.equals("-")) {
+            return;
+        }
+        int sumaProtivnika = Integer.parseInt(sumaProtivnikaStr);
         if (sumaProtivnika > 0) {
             System.out.println("Prvi");
             if (suma > sumaProtivnika) {
@@ -373,10 +380,16 @@ public class IgraController implements Initializable {
         }
     }
 
+
+    // Ucitava ime protivnika iznad tabele:
     private void ucitajProtivnika() {
+
+        // Odredjuje ko ima prvi potez:
         if (server == 1) {
             baciKocke.setDisable(true);
         }
+
+        // Pokrece novi thread u pozadini, koji ceka dok protivnik ne bude poznat:
         (new Thread() {
             public void run() {
                 try {
@@ -394,6 +407,8 @@ public class IgraController implements Initializable {
         }).start();
     }
 
+
+    // Na pritisak "Enter" cita poruku iz textboxa i salje je protivniku:
     private void chat() {
         chatInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -409,13 +424,18 @@ public class IgraController implements Initializable {
         });
     }
 
+
+    // Pritisak tipke "Baci"
     private void baci() {
         baciKocke.setOnAction(event -> {
+
             if (odabraneKocke.isEmpty()) {
                 jamb.baciSveKocke();
             } else {
                 jamb.baciSveOsim(odabraneKocke);
             }
+
+            // Salje vrijednosti kocki protivniku:
             if (TrazenjeIgracaController.klijent) {
                 KlijentTCP.posalji("kocke:" + jamb.getSveKocke()[0].getVrijednost() + ":"
                         + jamb.getSveKocke()[1].getVrijednost() + ":" + jamb.getSveKocke()[2].getVrijednost() + ":"
@@ -429,7 +449,7 @@ public class IgraController implements Initializable {
                 promjeniSliku(i, jamb.getSveKocke()[i].getVrijednost());
             }
 
-            // Toggle update:
+            // Racunanje vrijednosti na tabeli:
             if (!toggle1.isDisabled()) {
                 toggle1.setText(Integer.toString(jamb.getGornjiSkor(1)));
             }
@@ -478,35 +498,38 @@ public class IgraController implements Initializable {
         });
     }
 
+
+    // Izlaz iz igre:
     private void izlaz() {
-        izadjiButton.setOnAction(event -> krajIgre());
+        izadjiButton.setOnAction(event -> {
+            if (TrazenjeIgracaController.klijent) {
+                KlijentTCP.posalji("quit");
+                KlijentTCP.running = false;
+            } else {
+                ServerTCP.posalji("quit");
+                ServerTCP.running = false;
+            }
+
+            KlijentUDP.poruka = ServerUDP.prijavljeniIgrac;
+            if (!LoginController.udpKlijent.isAlive()) {
+                LoginController.udpKlijent.start();
+            }
+            if (!LoginController.udpServer.isAlive()) {
+                new ServerUDP().start();
+            }
+            TrazenjeIgracaController.ig = null;
+            ServerUDP.protivnik = "";
+            IgraController.server = 0;
+            IgraController.potez = 0;
+            IgraController.odabraneKocke.clear();
+            IgraController.jamb = null;
+            baciKocke.setDisable(false);
+            Window.promjeniScenu("TrazenjeIgraca.fxml", "Traženje igrača", 800, 600);
+        });
     }
 
-    private void krajIgre() {
-        if (TrazenjeIgracaController.klijent) {
-            KlijentTCP.posalji("quit");
-            KlijentTCP.running = false;
-        } else {
-            ServerTCP.posalji("quit");
-            ServerTCP.running = false;
-        }
 
-        KlijentUDP.poruka = ServerUDP.prijavljeniIgrac;
-        if (!LoginController.udpKlijent.isAlive()) {
-            LoginController.udpKlijent.start();
-        }
-        if (!LoginController.udpServer.isAlive()) {
-            new ServerUDP().start();
-        }
-        TrazenjeIgracaController.ig = null;
-        ServerUDP.protivnik = "";
-        IgraController.server = 0;
-        IgraController.potez = 0;
-        IgraController.odabraneKocke.clear();
-        IgraController.jamb = null;
-        Window.promjeniScenu("TrazenjeIgraca.fxml", "Traženje igrača", 800, 600);
-    }
-
+    // Odabir kocki koje se nece bacati:
     public void ostaviKocku() {
 
         if (kocka1.isHover()) {
@@ -552,6 +575,7 @@ public class IgraController implements Initializable {
         }
 
     }
+
 
     private void resetKocke() {
         kocka1.setOpacity(1);
